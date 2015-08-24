@@ -1,0 +1,9 @@
+---
+- name: Configure a VPN Server
+  hosts: 'vpn-server/development-local.yml'
+  sudo: yes
+  vars:
+    playbook_hosts: vpn-server/_development-local.yml
+  roles:
+    - role: component/open-vpn-server
+      tags: [components, component.open-vpn-server]
