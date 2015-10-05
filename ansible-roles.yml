@@ -1,0 +1,8 @@
+---
+- src: https://github.com/preact/ansible-openvpn-server
+  name: openvpn-server
+  path: roles/vendor/component
+
+- src: https://github.com/preact/ansible-easy-rsa
+  name: easy-rsa
+  path: roles/vendor/component
