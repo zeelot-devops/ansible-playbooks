@@ -22,4 +22,13 @@ Vagrant.configure(2) do |config|
       ansible.inventory_path = "inventory"
     end
   end
+
+  config.vm.define 'keygen-server' do |vm_config|
+    vm_config.vm.network "private_network", ip: '10.0.3.11', lxc__bridge_name: '10.0.3.11'
+
+    vm_config.vm.provision "ansible" do |ansible|
+      ansible.playbook = "playbooks/provision/keygen-server/development-local.yml"
+      ansible.inventory_path = "inventory"
+    end
+  end
 end

@@ -1,2 +1,5 @@
 [vpn-server/development-local.yml]
 vpn-server
+
+[keygen-server/development-local.yml]
+keygen-server

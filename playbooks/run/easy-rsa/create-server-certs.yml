@@ -1,0 +1,27 @@
+---
+- name: Generate certificate keys for a server like OpenVPN
+  hosts: 'keygen-server/development-local.yml'
+  sudo: yes
+  tasks:
+    - name: run needed easyrsa commands
+      shell: 'source vars && ./{{ item }}'
+      args:
+        chdir: /etc/easy-rsa.openvpn
+        executable: /bin/bash
+      with_items:
+        - clean-all
+        - build-dh
+        - pkitool --initca
+        - pkitool --server server
+
+    - name: copy files to the host machine
+      fetch:
+        src: '/etc/easy-rsa.openvpn/keys/{{ item }}'
+        dest: '{{ lookup("env","ANSIBLE_ROOT_PATH") }}/.tmp/easy-rsa.openvpn/'
+        flat: true
+      with_items:
+        - dh2048.pem
+        - ca.crt
+        - ca.key
+        - server.crt
+        - server.key

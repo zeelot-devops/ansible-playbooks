@@ -1,0 +1,7 @@
+---
+- name: Configure a machine with tools needed to generate keys
+  hosts: 'keygen-server/development-local.yml'
+  sudo: yes
+  roles:
+    - role: component/easy-rsa
+      tags: [components, component.easy-rsa]

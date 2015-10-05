@@ -1,0 +1,42 @@
+---
+- name: Generate certificate keys for a vpn client
+  hosts: 'keygen-server/development-local.yml'
+  sudo: yes
+  tasks:
+    - name: verify required variables
+      fail:
+        msg: this play requires a "client_name" variable to be defined.
+      when: client_name is not defined
+
+    - name: clear current cert files
+      shell: 'source vars && ./clean-all'
+      args:
+        chdir: /etc/easy-rsa.openvpn
+        executable: /bin/bash
+
+    - name: copy server certs to the remote machine
+      copy:
+        src: '{{ lookup("env","ANSIBLE_ROOT_PATH") }}/.tmp/easy-rsa.openvpn/{{ item }}'
+        dest: '/etc/easy-rsa.openvpn/keys/'
+      with_items:
+        - dh2048.pem
+        - ca.crt
+        - ca.key
+        - server.crt
+        - server.key
+
+    - name: create client cert files
+      shell: 'source vars && ./pkitool {{ client_name }}'
+      args:
+        chdir: /etc/easy-rsa.openvpn
+        executable: /bin/bash
+
+    - name: copy files to the host machine
+      fetch:
+        src: '/etc/easy-rsa.openvpn/keys/{{ item }}'
+        dest: '{{ lookup("env","ANSIBLE_ROOT_PATH") }}/.tmp/easy-rsa.openvpn/{{ client_name }}/'
+        flat: true
+      with_items:
+        - '{{ client_name }}.crt'
+        - '{{ client_name }}.csr'
+        - '{{ client_name }}.key'

@@ -1,0 +1,12 @@
+---
+ansible_ssh_host: "10.0.3.11"
+ansible_ssh_user: vagrant
+
+easy_rsa_cadirs:
+  - path: /etc/easy-rsa.openvpn
+    key_country:  'US'
+    key_province: 'CA'
+    key_city:     'SanFrancisco'
+    key_org:      'Worpd'
+    key_email:    'zeelot3k@gmail.com'
+    key_ou:       'DevOps'

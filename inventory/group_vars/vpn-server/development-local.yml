@@ -1,2 +1,7 @@
 ---
 ansible_ssh_host: "10.0.3.10"
+
+openvpn_dh_pem_source: '{{ lookup("env","ANSIBLE_ROOT_PATH") }}/.tmp/easy-rsa.openvpn/dh2048.pem'
+openvpn_ca_cert_source: '{{ lookup("env","ANSIBLE_ROOT_PATH") }}/.tmp/easy-rsa.openvpn/ca.crt'
+openvpn_server_cert_source: '{{ lookup("env","ANSIBLE_ROOT_PATH") }}/.tmp/easy-rsa.openvpn/server.crt'
+openvpn_server_key_source: '{{ lookup("env","ANSIBLE_ROOT_PATH") }}/.tmp/easy-rsa.openvpn/server.key'
